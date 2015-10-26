@@ -92,11 +92,7 @@
 
 // global variables
 volatile bool change = false;
-uint8_t last_xmin = 0, last_ymin = 0, last_zmin = 0, last_probe = 0;
-uint8_t last_xdir = 0, last_ydir = 0, last_zdir = 0, last_adir = 0;
-uint8_t last_spindle = 0;
-uint8_t last_enable = 0;
-
+uint8_t last_enable=1;
 bool last_button= false;
 bool led = false;
 bool motors_enabled= false;
@@ -332,20 +328,20 @@ void setup()
 #endif
 
 #ifdef LCNC_PROBE
-	lcncProbe= last_probe= probe;
+	lcncProbe= probe;
 #endif
 
 #ifdef LCNC_SPINDLE
-	mosfet1= last_spindle= lcncSpindle;
+	mosfet1= lcncSpindle;
 #endif
 
 	// initialize mirror pins
-	lcncLimitX= last_xmin = xMinEndstop;
-	lcncLimitY= last_ymin = yMinEndstop;
-	lcncLimitZ= last_zmin = zMinEndstop;
-	led2= last_xmin;
-	led3= last_ymin;
-	led4= last_zmin;
+	lcncLimitX= xMinEndstop;
+	lcncLimitY= yMinEndstop;
+	lcncLimitZ= zMinEndstop;
+	led2= xMinEndstop;
+	led3= yMinEndstop;
+	led4= zMinEndstop;
 
 	xStep= lcncXStep;
 	xDir= lcncXDir;
@@ -390,21 +386,18 @@ void loop()
 
 #ifndef DIR_INTERRUPT
 		// monitor dir pins
-		if((v=lcncXDir) != last_xdir) {
-			last_xdir = v;
+		// latency 3.75us, max frequency: 16khz, minimum pulse width: 30us
+		if((v=lcncXDir) != xDir) {
 			xDir= v;
 		}
-		if((v=lcncYDir) != last_ydir) {
-			last_ydir = v;
+		if((v=lcncYDir) != yDir) {
 			yDir= v;
 		}
-		if((v=lcncZDir) != last_zdir) {
-			last_zdir = v;
+		if((v=lcncZDir) != zDir) {
 			zDir= v;
 		}
 #ifdef LCNC_A_DIR
-		if((v=lcncADir) != last_adir) {
-			last_adir = v;
+		if((v=lcncADir) != aDir) {
 			aDir= v;
 		}
 #endif
@@ -419,32 +412,27 @@ void loop()
 		}
 #endif
 		// monitor limit switches, they are debounced
-		if((v=xMinEndstop) != last_xmin) {
-			last_xmin = v;
+		if((v=xMinEndstop) != lcncLimitX) {
 			lcncLimitX= v;
 			led2= v;
 		}
-		if((v=yMinEndstop) != last_ymin) {
-			last_ymin = v;
+		if((v=yMinEndstop) != lcncLimitY) {
 			lcncLimitY= v;
 			led3= v;
 		}
-		if((v=zMinEndstop) != last_zmin) {
-			last_zmin = v;
+		if((v=zMinEndstop) != lcncLimitZ) {
 			lcncLimitZ= v;
 			led4= v;
 		}
 
 		#ifdef LCNC_PROBE
-		if((v=probe) != last_probe) {
-			last_probe = v;
+		if((v=probe) != lcncProbe) {
 			lcncProbe= v;
 		}
 		#endif
 
 		#ifdef LCNC_SPINDLE
-		if((v=lcncSpindle) != last_spindle) {
-			last_spindle = v;
+		if((v=lcncSpindle) != mosfet1) {
 			mosfet1= v;
 		}
 		#endif
@@ -459,7 +447,7 @@ void loop()
 			last_button= false;
 		}
 
-		if((ledcnt++ % 100000) == 0) {
+		if((ledcnt++ % 200000) == 0) {
 			led1= !led1;
 		}
 	}
