@@ -43,24 +43,24 @@
 
 // Mapping of parallel port pins to azteegx5 pins
 // interrupts only on P0.* and P2.*
-#define PP2  P0_16  // xpulse
-#define PP3  P0_18  // Xdir
-#define PP4  P0_26  // ypulse
-#define PP5  P0_25  // Ydir
-#define PP6  P2_11  // zpulse
-#define PP7  P0_17  // Zdir
-#define PP8  P2_6   // apulse
-#define PP9  P2_8   // Adir
-#define PP14 P0_15  // enable
-
-//#define PP10 xx // estop
+#define PP2  P0_16  // xpulse	   
+#define PP3  P0_18  // Xdir	 	   
+#define PP4  P0_26  // ypulse	   
+#define PP5  P0_25  // Ydir	 	   
+#define PP6  P2_11  // zpulse	   
+#define PP7  P0_17  // Zdir	 	   
+#define PP8  P2_6   // apulse	   
+#define PP9  P2_8   // Adir	 	   
+#define PP14 P0_15  // enable	   
+	   							   
+//#define PP10 xx // estop		   
 // NOTE on an intelligent breakout board this is handled direct by the breakout board and not through this
 // however these can be wired direct to the parallel port.
 #define PP11 P1_30 // probe optional
-#define PP12 P3_26 // xlimit
-#define PP13 P3_25 // ylimit
-#define PP15 P1_23 // zlimit
-//#define PP16 XX    // Bpulsej
+#define PP12 P3_26 // xlimit	   
+#define PP13 P3_25 // ylimit	   
+#define PP15 P1_23 // zlimit	   
+//#define PP16 XX    // Bpulsej	   
 #define PP17 P4_29 // spindle/relay
 
 // LinuxCNC parallel port configuration - what pins the parallel port pins are conencted to
