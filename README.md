@@ -6,7 +6,7 @@ Just edit main.cpp to set currents required.
 Parallel port mappings are as follows....
 
 
-
+```
   PP2  P0_16  // xpulse	   
   PP3  P0_18  // Xdir	 	   
   PP4  P0_26  // ypulse	   
@@ -22,4 +22,4 @@ Parallel port mappings are as follows....
   PP15 P1_23  // zlimit	   
   PP16 XX     // Bpulse	   
   PP17 P4_29  // spindle/relay
- 
+``` 
