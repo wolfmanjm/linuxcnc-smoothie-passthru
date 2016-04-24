@@ -1,6 +1,6 @@
-//linuxcnc-ramps-passsthru.ino
+//linuxcnc-azteegx5-passsthru
 
-// monitor pins from parallel port for change and toggle appropriate conencted pins on ramps/azteeg pro
+// monitor pins from parallel port for change and toggle appropriate connected pins on azteegX5
 
 #include "mbed.h"
 #include "us_ticker_api.h"
@@ -15,7 +15,7 @@
 #define LED5 P4_28
 #define BUTTON1 P2_12
 
-// Azteeg X5 mini (proto) pin mappings
+// Azteeg X5 mini V1 (or proto) pin mappings
 #define X_STEP P2_1
 #define X_DIR P0_11
 #define X_ENABLE P0_10
@@ -273,10 +273,11 @@ void setCurrents()
 {
     i2c.frequency(20000);
     //static const float currents[]{1.2F, 1.2F, 1.2F, 1.2F}; // currents for X Y Z A
-    static const float currents[]{0.7F, 0.7F, 0.7F, 0.7F}; // currents for X Y Z A
+	//static const float currents[]{0.7F, 0.7F, 0.7F, 0.7F}; // currents for X Y Z A
+	static const float currents[]{2.0F, 2.0F, 2.0F, 2.0F}; // currents for X Y Z A
     static const char addresses[]{ 0x00, 0x10, 0x60, 0x70 };
-    static const float factor= 152.1F; // azteeg X5 mini proto
-    //static const float factor= 106.1F; // azteeg X5 mini production
+    //static const float factor= 152.1F; // azteeg X5 mini proto
+    static const float factor= 106.1F; // azteeg X5 mini production
     //static const float factor= 113.33F; // smoothieboard
 
     for (int i = 0; i < 4; ++i) {
